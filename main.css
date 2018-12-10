@@ -1,0 +1,9 @@
+.centered {
+  margin: auto;
+  display: block;
+}
+
+.input_area {
+  display: flex;
+  justify-content: space-between;
+}
