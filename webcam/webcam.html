@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" media="all" href="webcam.css">
+    <style>
+        video, #screenshot-img {
+            width: 300px;
+            height: 300px;
+        }
+        video {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<div id="screenshot" style="text-align:center;">
+    <video id="video-stream" autoplay></video>
+    <img id="screenshot-img">
+    <p><button id="capture-button">Capture video</button></p>
+    <p><button id="screenshot-button" disabled>Take screenshot</button></p>
+    <p><button id="stop-button" disabled>Stop</button></div></p>
+    <p><a id="btn-download" aria-disabled="true">Download</a></p>
+    <script src="webcam.js"></script>
+</div>
+
+</body>
+</html>
