@@ -24,9 +24,13 @@
   </div>
 </div>
 
-
-
 <div class="container">
+  <div class="row my-4">
+    <div class="select">
+      <label for="videoSource">카메라: </label><select id="videoSource"></select>
+    </div>
+  </div>
+  
   <div class="row my-4">
     <div class="col-md-5 offset-md-3">
       <video autoplay playsinline muted id="webcam" class="centered" width="224" height="224"></video>
@@ -38,7 +42,6 @@
   </div>
 
   <div class="input_area">
-    <div class="input_module">이미지 선택하기</div>
     <div class="input_module">
       <select id="content-select" class="centered custom-select">
         <option value="" disabled>Select content</option>

@@ -71,47 +71,119 @@ var Main = function () {
 
       this.webcam = new _webcam.Webcam(document.getElementById("webcam"));
       document.getElementById("no-webcam").style.display = "none";
+
+      this.videoSelect = document.querySelector("select#videoSource");
+      this.videoSelect.onchange = this.initWebCam();
+      navigator.mediaDevices.enumerateDevices().then(this.gotDevices)
+      // .then(this.getStream)
+      .catch(this.handleError);
+
       this.initWebCam();
+    }
+  }, {
+    key: "gotDevices",
+    value: function gotDevices(deviceInfos) {
+      for (var i = 0; i !== deviceInfos.length; ++i) {
+        var deviceInfo = deviceInfos[i];
+        var option = document.createElement("option");
+        option.value = deviceInfo.deviceId;
+        if (deviceInfo.kind === "videoinput") {
+          option.text = deviceInfo.label || "camera " + (main.videoSelect.length + 1);
+          main.videoSelect.appendChild(option);
+          main.initWebCam();
+        } else {
+          console.log("Found one other kind of source/device: ", deviceInfo);
+        }
+      }
+    }
+  }, {
+    key: "getStream",
+    value: function getStream() {
+      if (window.stream) {
+        window.stream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+
+      var constraints = {
+        video: {
+          deviceId: { exact: videoSelect.value }
+        }
+      };
+
+      navigator.mediaDevices.getUserMedia(constraints).then(this.gotStream).catch(handleError);
+    }
+  }, {
+    key: "gotStream",
+    value: function gotStream(stream) {
+      window.stream = stream; // make stream available to console
+      videoElement.srcObject = stream;
+    }
+  }, {
+    key: "handleError",
+    value: function handleError(error) {
+      console.log("Error: ", error);
     }
   }, {
     key: "initWebCam",
     value: function initWebCam() {
       var _this2 = this;
 
+      var options, selectedIndex, selectedCamera;
       return regeneratorRuntime.async(function initWebCam$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
+              options = this.videoSelect.options;
+              selectedIndex = this.videoSelect.selectedIndex;
+              selectedCamera = options[selectedIndex];
+
+              console.log("selectedCamera " + selectedCamera);
+
+              _context.prev = 4;
+
+              document.getElementById("no-webcam").style.display = "none";
+
+              if (!(selectedCamera == null)) {
+                _context.next = 11;
+                break;
+              }
+
+              _context.next = 9;
               return regeneratorRuntime.awrap(this.webcam.setup());
 
-            case 3:
-              _context.next = 9;
+            case 9:
+              _context.next = 13;
               break;
 
-            case 5:
-              _context.prev = 5;
-              _context.t0 = _context["catch"](0);
+            case 11:
+              _context.next = 13;
+              return regeneratorRuntime.awrap(this.webcam.setup(selectedCamera));
 
-              console.log("4-1. No webcam");
+            case 13:
+              _context.next = 19;
+              break;
+
+            case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](4);
+
+              console.log("No webcam");
               document.getElementById("no-webcam").style.display = "block";
 
-            case 9:
-
-              console.log("4-2. Init Webcam success");
+            case 19:
 
               this.snapButton.onclick = function () {
                 var img = _this2.webcam.capture();
                 _this2.draw(img, _this2.contentImg);
               };
 
-            case 11:
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[0, 5]]);
+      }, null, this, [[4, 15]]);
     }
   }, {
     key: "draw",
@@ -198,7 +270,7 @@ var Main = function () {
     key: "enableStylizeButtons",
     value: function enableStylizeButtons() {
       this.styleButton.disabled = false;
-      this.styleButton.textContent = "확인하기";
+      this.styleButton.textContent = "측정하기";
     }
   }, {
     key: "disableStylizeButtons",
@@ -275,8 +347,9 @@ window.mobilecheck = function () {
   return check;
 };
 
+var main;
 window.addEventListener("load", function () {
-  return new Main();
+  return main = new Main();
 });
 
 },{"./webcam":613,"@tensorflow/tfjs":260,"babel-polyfill":262}],2:[function(require,module,exports){
@@ -52270,7 +52343,7 @@ var Webcam = exports.Webcam = function () {
     }
   }, {
     key: "setup",
-    value: function setup() {
+    value: function setup(selectedCamera) {
       var _this2 = this;
 
       return regeneratorRuntime.async(function setup$(_context2) {
@@ -52281,7 +52354,13 @@ var Webcam = exports.Webcam = function () {
                 var navigatorAny = navigator;
                 navigator.getUserMedia = navigator.getUserMedia || navigatorAny.webkitGetUserMedia || navigatorAny.mozGetUserMedia || navigatorAny.msGetUserMedia;
                 if (navigator.getUserMedia) {
-                  navigator.getUserMedia({ video: true }, function (stream) {
+                  navigator.getUserMedia(
+                  // { video: true },
+                  {
+                    video: {
+                      deviceId: { exact: selectedCamera }
+                    }
+                  }, function (stream) {
                     _this2.webcamElement.srcObject = stream;
                     _this2.webcamElement.addEventListener("loadeddata", function _callee() {
                       return regeneratorRuntime.async(function _callee$(_context) {
