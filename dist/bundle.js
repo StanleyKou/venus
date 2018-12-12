@@ -72,11 +72,13 @@ var Main = function () {
       this.webcam = new _webcam.Webcam(document.getElementById("webcam"));
       document.getElementById("no-webcam").style.display = "none";
 
-      this.videoSelect = document.querySelector("select#videoSource");
-      this.videoSelect.onchange = this.initWebCam();
-      navigator.mediaDevices.enumerateDevices().then(this.gotDevices)
-      // .then(this.getStream)
-      .catch(this.handleError);
+      // this.videoSelect = document.querySelector("select#videoSource");
+      // this.videoSelect.onchange = this.initWebCam();
+      // navigator.mediaDevices
+      //   .enumerateDevices()
+      //   .then(this.gotDevices)
+      //   // .then(this.getStream)
+      //   .catch(this.handleError);
 
       this.initWebCam();
     }
@@ -90,7 +92,7 @@ var Main = function () {
         if (deviceInfo.kind === "videoinput") {
           option.text = deviceInfo.label || "camera " + (main.videoSelect.length + 1);
           main.videoSelect.appendChild(option);
-          main.initWebCam();
+          // main.initWebCam();
         } else {
           console.log("Found one other kind of source/device: ", deviceInfo);
         }
@@ -129,61 +131,38 @@ var Main = function () {
     value: function initWebCam() {
       var _this2 = this;
 
-      var options, selectedIndex, selectedCamera;
       return regeneratorRuntime.async(function initWebCam$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              options = this.videoSelect.options;
-              selectedIndex = this.videoSelect.selectedIndex;
-              selectedCamera = options[selectedIndex];
-
-              console.log("selectedCamera " + selectedCamera);
-
-              _context.prev = 4;
-
-              document.getElementById("no-webcam").style.display = "none";
-
-              if (!(selectedCamera == null)) {
-                _context.next = 11;
-                break;
-              }
-
-              _context.next = 9;
+              _context.prev = 0;
+              _context.next = 3;
               return regeneratorRuntime.awrap(this.webcam.setup());
 
-            case 9:
-              _context.next = 13;
+            case 3:
+              _context.next = 9;
               break;
 
-            case 11:
-              _context.next = 13;
-              return regeneratorRuntime.awrap(this.webcam.setup(selectedCamera));
-
-            case 13:
-              _context.next = 19;
-              break;
-
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context["catch"](4);
+            case 5:
+              _context.prev = 5;
+              _context.t0 = _context["catch"](0);
 
               console.log("No webcam");
               document.getElementById("no-webcam").style.display = "block";
 
-            case 19:
+            case 9:
 
               this.snapButton.onclick = function () {
                 var img = _this2.webcam.capture();
                 _this2.draw(img, _this2.contentImg);
               };
 
-            case 20:
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[4, 15]]);
+      }, null, this, [[0, 5]]);
     }
   }, {
     key: "draw",
