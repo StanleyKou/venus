@@ -42,10 +42,6 @@ var Main = function () {
 
     _classCallCheck(this, Main);
 
-    if (window.mobilecheck()) {
-      document.getElementById("mobile-warning").hidden = false;
-    }
-
     this.fileSelect = document.getElementById("file-select");
 
     this.initalizeWebcamVariables();
