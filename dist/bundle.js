@@ -219,7 +219,7 @@ var Main = function () {
     value: function startStyling() {
       var _this5 = this;
 
-      var tensor, values, resultArray, bf10, bf15, bf25, bf35, bf45, resultDisplay, resultDetailText;
+      var tensor, values, resultArray, bf05, bf10, bf15, bf25, bf35, bf45, resultDisplay, resultDetailText;
       return regeneratorRuntime.async(function startStyling$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -248,23 +248,24 @@ var Main = function () {
               console.log("result: " + tensor);
               values = tensor.dataSync();
               resultArray = Array.from(values);
-              bf10 = resultArray[0].toFixed(4);
-              bf15 = resultArray[1].toFixed(4);
-              bf25 = resultArray[2].toFixed(4);
-              bf35 = resultArray[3].toFixed(4);
-              bf45 = resultArray[4].toFixed(4);
-              resultDisplay = "\uB2F9\uC2E0\uC758 \uCCB4\uC9C0\uBC29\uC740 " + (10 * bf10 + 15 * bf15 + 25 * bf25 + 35 * bf35 + 45 * bf45).toFixed(2) + "% \uC785\uB2C8\uB2E4.";
+              bf05 = resultArray[0].toFixed(4);
+              bf10 = resultArray[1].toFixed(4);
+              bf15 = resultArray[2].toFixed(4);
+              bf25 = resultArray[3].toFixed(4);
+              bf35 = resultArray[4].toFixed(4);
+              bf45 = resultArray[5].toFixed(4);
+              resultDisplay = "\uB2F9\uC2E0\uC758 \uCCB4\uC9C0\uBC29\uC740 " + (5 * bf05 + 10 * bf10 + 15 * bf15 + 25 * bf25 + 35 * bf35 + 45 * bf45).toFixed(2) + "% \uC785\uB2C8\uB2E4.";
 
 
               this.resultDisplay.innerHTML = resultDisplay.toString();
 
-              resultDetailText = "\n    \uCCB4\uC9C0\uBC29 10% \uC77C \uD655\uB960: " + bf10 + "<br>\n    \uCCB4\uC9C0\uBC29 15% \uC77C \uD655\uB960: " + bf15 + "<br>\n    \uCCB4\uC9C0\uBC29 25% \uC77C \uD655\uB960: " + bf25 + "<br>\n    \uCCB4\uC9C0\uBC29 35% \uC77C \uD655\uB960: " + bf35 + "<br>\n    \uCCB4\uC9C0\uBC29 45% \uC77C \uD655\uB960: " + bf45 + "<br>";
+              resultDetailText = "\n    \uCCB4\uC9C0\uBC29  5% \uC77C \uD655\uB960: " + bf05 + "<br>\n    \uCCB4\uC9C0\uBC29 10% \uC77C \uD655\uB960: " + bf10 + "<br>\n    \uCCB4\uC9C0\uBC29 15% \uC77C \uD655\uB960: " + bf15 + "<br>\n    \uCCB4\uC9C0\uBC29 25% \uC77C \uD655\uB960: " + bf25 + "<br>\n    \uCCB4\uC9C0\uBC29 35% \uC77C \uD655\uB960: " + bf35 + "<br>\n    \uCCB4\uC9C0\uBC29 45% \uC77C \uD655\uB960: " + bf45 + "<br>";
 
 
               this.resultDetailDisplay.innerHTML = resultDetailText;
               tensor.dispose();
 
-            case 21:
+            case 22:
             case "end":
               return _context2.stop();
           }
